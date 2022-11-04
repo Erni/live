@@ -8,7 +8,7 @@ provider "aws" {
 
 # Reference to this module to make it accessible to this environment
 module "webserver_cluster" {
-  source = "../../../modules/services/webserver-cluster"
+  source = "../../../../modules/services/webserver-cluster"
 
   cluster_name           = var.cluster_name
   # commenting this parameter so it is the same bucket name in all environments
