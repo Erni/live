@@ -8,7 +8,8 @@ provider "aws" {
 
 # Reference to this module to make it accessible to this environment
 module "webserver_cluster" {
-  source = "../../../modules/services/webserver-cluster" # this can also be a url
+  # source = "../../../modules/services/webserver-cluster" # this can also be a url
+  source = "github.com/Erni/modules//services/webserver-cluster?ref=v0.0.1"
 
   cluster_name           = var.cluster_name
   # commenting this parameter so it is the same bucket name in all environments
@@ -28,5 +29,5 @@ resource "aws_security_group_rule" "allow_testing_inbound" {
   from_port   = 12345
   to_port     = 12345
   protocol    = "tcp"
-  cidr_blocks = [0.0.0.0/0]
+  cidr_blocks = ["0.0.0.0/0"]
 }
