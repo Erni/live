@@ -8,8 +8,10 @@ provider "aws" {
 
 # Reference to this module to make it accessible to this environment
 module "webserver_cluster" {
-  # source = "../../../modules/services/webserver-cluster" # this can also be a url
-  source = "github.com/Erni/modules//services/webserver-cluster?ref=v0.0.1"
+  # this can be a local path (while dev and testing)
+  # and a url (mostly for PROD) such a github repo with tag for a particular release
+  source = "../../../../modules/services/webserver-cluster"
+  # source = "github.com/Erni/modules//services/webserver-cluster?ref=v0.0.3"
 
   cluster_name           = var.cluster_name
   # commenting this parameter so it is the same bucket name in all environments
