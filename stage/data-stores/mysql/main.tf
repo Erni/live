@@ -1,9 +1,10 @@
-# Define AWS Provider #######################################
-# It automatically takes the credentials from
-# "~/.aws/credentials" for profile "okta-elastic-dev"
-provider "aws" {
-  region                   = "us-east-2"
-  profile                  = "okta-elastic-dev"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
 }
 
 terraform {
@@ -16,13 +17,18 @@ terraform {
   }
 }
 
-resource "aws_db_instance" "example" {
-  identifier_prefix   = "ernesto-reig-tf-"
-  engine              = "mysql"
-  allocated_storage   = 10
-  instance_class      = "db.t2.micro"
-  db_name             = var.db_name
-  username            = var.db_username
-  password            = var.db_password
-  skip_final_snapshot = true
+provider "aws" {
+  region = "us-east-2"
+}
+
+module "mysql" {
+  source = "../../../../modules/data-stores/mysql"
+
+  db_name     = "stage_db"
+  db_username = var.db_username
+  db_password = var.db_password
+
+  # Must be enabled to support replication
+  # Disabled as we don´t need replication in STAGE environment
+  # backup_retention_period = 1
 }
